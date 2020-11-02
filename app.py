@@ -11,8 +11,8 @@ import numpy as np # linear algebra
 import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 import scipy
 from scipy import special
-# import plotly.express as px
-# import plotly.graph_objects as go
+import plotly.express as px
+import plotly.graph_objects as go
 
 
 # Your imports goes below
@@ -181,15 +181,15 @@ def main():
             state_win, p, sd, ev_dist = update_prob(mu, Sigma, ev,biden_states = biden_states,trump_states = trump_states,biden_scores_list = None)
 
             st.write(pd.DataFrame({'Win %':round(100*state_win,1),'':''}).T)
-            # layout = go.Layout(title = 'Simulation of electoral vote',xaxis = go.XAxis(title = 'Electoral Votes'),yaxis = go.YAxis(showticklabels=False))
-            # # fig = px.histogram(pd.DataFrame({'Electoral votes':ev_dist}), histnorm='probability density')
-            # fig = go.Figure(layout=layout)
-            # fig.add_trace(go.Histogram(x=ev_dist[ev_dist > 269],name='Biden win',xbins=dict(start=0,end=538,size=1),marker_color='#0000ff'))
-            # fig.add_trace(go.Histogram(x=ev_dist[ev_dist < 269],name='Trump win',xbins=dict(start=0,end=538,size=1),marker_color='#ff0000'))
-            # fig.add_trace(go.Histogram(x=ev_dist[ev_dist == 269],name='Draw',xbins=dict(start=0,end=538,size=1),marker_color='#bfbfbf'))
-            # # fig.update_traces(,marker_color='#FF0000')
+            layout = go.Layout(title = 'Simulation of electoral vote',xaxis = go.XAxis(title = 'Electoral Votes'),yaxis = go.YAxis(showticklabels=False))
+            # fig = px.histogram(pd.DataFrame({'Electoral votes':ev_dist}), histnorm='probability density')
+            fig = go.Figure(layout=layout)
+            fig.add_trace(go.Histogram(x=ev_dist[ev_dist > 269],name='Biden win',xbins=dict(start=0,end=538,size=1),marker_color='#0000ff'))
+            fig.add_trace(go.Histogram(x=ev_dist[ev_dist < 269],name='Trump win',xbins=dict(start=0,end=538,size=1),marker_color='#ff0000'))
+            fig.add_trace(go.Histogram(x=ev_dist[ev_dist == 269],name='Draw',xbins=dict(start=0,end=538,size=1),marker_color='#bfbfbf'))
+            # fig.update_traces(,marker_color='#FF0000')
             
-            # st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, use_container_width=True)
             
         except ValueError:
             st.warning('More than 99.99% of the samples are rejected; you should relax some contraints.')
