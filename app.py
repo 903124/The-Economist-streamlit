@@ -14,6 +14,7 @@ from scipy import special
 import plotly.express as px
 import plotly.graph_objects as go
 
+session = SessionState.get(run_id=0)
 
 # Your imports goes below
 rng = np.random.default_rng()
@@ -106,7 +107,7 @@ def read_file():
     ev["NE"] = 2
     ev.update({"ME1":1, "ME2":1, "NE1":1, "NE2":1, "NE3":1})
 
-    pres_results_by_cd = pd.read_csv('https://www.kaggleusercontent.com/kf/45924021/eyJhbGciOiJkaXIiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2In0..5lC-7LOyyTOPUdyNiIEiGA.YrJDEl0gwPIqWhLlBTEBUJYK794_cNlLK76mM4ycOqEK4UwxSn06z7up6MF_RnZ_ULshI4GXDRk-cXxs6TlFYfRVM-6qcViWmL7vXvqrI0XTq3TU--xqEhrz2HFE-eGSF2raz8M7rK_o5ngM4SqYQfDVcY7_LTshDLQ5ac2oQ6o193bCdJNn9vgEwmpcN1HR8H1WBXiEF0hWqMc26jMeDa-UWe12QccEOBYoxbceNkrf4rU_oPVxUVXG6ufCB2AVG17t_Q0QYfnJWcTrE3XpBn__gak0WAjeHMBzHmdkSOOVPGQR3g7lr3dKbh2up9cSXmkF-H7eIp6iUxRrMpxMA8yyNsyC_dP0qCUilCWEDAtk7l-QEYiR3XWrEeFR9KZBKcmYNXm1ky2bpNJ9Tgu1aI_gvxqipfr56pYqprh9cr3XUyPM_04A8QIWRX8R2dQCFwsijD-7clno7ul0-1Jm3CxpAlztVp18Qi24GOAjXRPAO_4Ea4-OPFvqZTM5XBxqg125ZqhTjCRHN9Ol0hvI977bt8ZjPxvPp-xsTbIGc8XKxiqm_fgG_xXHLUIbGswbNsD8EUgWUy2y3Z1tKBaCY6LOiwhNrj9vn6zuLlnU7RehqBa0oeSb0bN3uB6PmyEI.mNX4tJ0Z8OjDKoP8DzINEA/pres_results_by_cd.csv', index_col=0)
+    pres_results_by_cd = pd.read_csv('https://github.com/903124/political_data/raw/main/pres_results_by_cd.csv', index_col=0)
     me_ne_leans  = pres_results_by_cd[(pres_results_by_cd['year'] >= 2012) & (pres_results_by_cd['state_abb'].isin(['ME','NE']))]
     me_ne_leans = me_ne_leans.drop(['other'], axis=1).rename(columns={'state_abb': 'state'})
     me_ne_leans['sum_pct'] = me_ne_leans[['dem','rep']].sum(axis=1)
@@ -199,12 +200,11 @@ def main():
             fig.add_trace(go.Histogram(x=ev_dist[ev_dist == 269],name='Draw',xbins=dict(start=0,end=538,size=1),marker_color='#bfbfbf'))
             # fig.update_traces(,marker_color='#FF0000')
             
-            
             plot = st.plotly_chart(fig, use_container_width=True)
 
-        
-    
         except ValueError:
             st.warning('More than 99.99% of the samples are rejected; you should relax some contraints.')
+
+
 if __name__ == "__main__":
     main()
