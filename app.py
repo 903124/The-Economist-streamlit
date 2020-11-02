@@ -14,8 +14,6 @@ from scipy import special
 import plotly.express as px
 import plotly.graph_objects as go
 
-session = SessionState.get(run_id=0)
-
 # Your imports goes below
 rng = np.random.default_rng()
 def draw_samples(mu, Sigma, ev,biden_states = None, trump_states = None, states = None, 
