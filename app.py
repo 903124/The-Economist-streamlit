@@ -186,6 +186,8 @@ def main():
             state_win, p, sd, ev_dist = update_prob(mu, Sigma, ev,biden_states = biden_states,trump_states = trump_states,biden_scores_list = None)
 
             st.write(pd.DataFrame({'Win %':round(100*state_win,1),'':''}).T)
+            trump_win_chance = 100*len(ev_dist[ev_dist < 269])/float(len(ev_dist))
+            st.write("Trump win = {:.1f}%".format(trump_win_chance))
             layout = go.Layout(title = 'Simulation of electoral vote',xaxis = go.XAxis(title = 'Electoral Votes'),yaxis = go.YAxis(showticklabels=False))
             # fig = px.histogram(pd.DataFrame({'Electoral votes':ev_dist}), histnorm='probability density')
             fig = go.Figure(layout=layout)
@@ -194,8 +196,11 @@ def main():
             fig.add_trace(go.Histogram(x=ev_dist[ev_dist == 269],name='Draw',xbins=dict(start=0,end=538,size=1),marker_color='#bfbfbf'))
             # fig.update_traces(,marker_color='#FF0000')
             
-            plot = st.plotly_chart(fig, use_container_width=True)
             
+            plot = st.plotly_chart(fig, use_container_width=True)
+
+        
+    
         except ValueError:
             st.warning('More than 99.99% of the samples are rejected; you should relax some contraints.')
 if __name__ == "__main__":
