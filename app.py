@@ -141,6 +141,11 @@ def read_file():
 
 def main():
     st.header("The Economist election model simulation")
+    st.write("The R version of the code is kindly provided by G. Elliot Morris from The Economist")
+    st.write("https://gist.github.com/elliottmorris/c70fd4d32049c9986a45e2dfc07fb4f0\n")
+    st.write('The code takes in The Economist election prediction model and allow user to do simulation base on true election outcome. The adjustmentable parameters are states won by candidate and lower/upper bound of vote share in the state.')
+
+
     mu, Sigma, ev = read_file()
 
     biden_states = []
@@ -189,7 +194,7 @@ def main():
             fig.add_trace(go.Histogram(x=ev_dist[ev_dist == 269],name='Draw',xbins=dict(start=0,end=538,size=1),marker_color='#bfbfbf'))
             # fig.update_traces(,marker_color='#FF0000')
             
-            st.plotly_chart(fig, use_container_width=True)
+            plot = st.plotly_chart(fig, use_container_width=True)
             
         except ValueError:
             st.warning('More than 99.99% of the samples are rejected; you should relax some contraints.')
