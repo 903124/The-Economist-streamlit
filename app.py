@@ -187,6 +187,9 @@ def main():
 
             st.write(pd.DataFrame({'Win %':round(100*state_win,1),'':''}).T)
             trump_win_chance = 100*len(ev_dist[ev_dist < 269])/float(len(ev_dist))
+            st.write("Trump State: {}".format(trump_states))
+            st.write("Biden State: {}".format(biden_states))
+            st.write('')
             st.write("Trump win = {:.1f}%".format(trump_win_chance))
             layout = go.Layout(title = 'Simulation of electoral vote',xaxis = go.XAxis(title = 'Electoral Votes'),yaxis = go.YAxis(showticklabels=False))
             # fig = px.histogram(pd.DataFrame({'Electoral votes':ev_dist}), histnorm='probability density')
