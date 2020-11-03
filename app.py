@@ -183,7 +183,7 @@ def main():
         try:
             state_win, p, sd, ev_dist = update_prob(mu, Sigma, ev,biden_states = biden_states,trump_states = trump_states,biden_scores_list = None)
 
-            st.write(pd.DataFrame({'Trump state win %':100-round(100*state_win,1),'':''}).T)
+            st.write(pd.DataFrame({'Trump state win %':round(100*(1-state_win),1),'':''}).T)
             trump_win_chance = 100*len(ev_dist[ev_dist < 269])/float(len(ev_dist))
             st.write("Trump State: {}".format(trump_states))
             st.write("Biden State: {}".format(biden_states))
