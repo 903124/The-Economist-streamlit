@@ -121,8 +121,10 @@ def read_file():
 
     # bind new simulation columns for the congressional districts, based on the above
 
-    sim_forecast[['ME1','ME2']] =  (pd.concat([sim_forecast[['ME']]]*2,axis=1) + np.random.normal( me_ne_leans[me_ne_leans.state == 'ME']['dem_cd_lean'], 0.0075, (len(sim_forecast),len(me_ne_leans[me_ne_leans.state == 'ME']['dem_cd_lean'].index)))).values
-    sim_forecast[['NE1','NE2','NE3']] =   (pd.concat([sim_forecast[['NE']]]*3,axis=1) + np.random.normal( me_ne_leans[me_ne_leans.state == 'NE']['dem_cd_lean'], 0.0075, (len(sim_forecast),len(me_ne_leans[me_ne_leans.state == 'NE']['dem_cd_lean'].index)))).values
+    me_leans =  (pd.concat([sim_forecast[['ME']]]*2,axis=1) + np.random.normal( me_ne_leans[me_ne_leans.state == 'ME']['dem_cd_lean'], 0.0075, (len(sim_forecast),len(me_ne_leans[me_ne_leans.state == 'ME']['dem_cd_lean'].index)))).values
+    ne_leans =   (pd.concat([sim_forecast[['NE']]]*3,axis=1) + np.random.normal( me_ne_leans[me_ne_leans.state == 'NE']['dem_cd_lean'], 0.0075, (len(sim_forecast),len(me_ne_leans[me_ne_leans.state == 'NE']['dem_cd_lean'].index)))).values
+    sim_forecast['ME1'],sim_forecast['ME2'] = me_leans[:,0], me_leans[:,1]
+    sim_forecast['NE1'], sim_forecast['NE2'], sim_forecast['NE3'] = ne_leans[:,0], ne_leans[:,1], ne_leans[:,2]
 
     sim_forecast = sim_forecast.clip(lower=0.0001,upper=0.99999)
     sim_evs = ((sim_forecast> 0.5).astype(int) * np.array(list(ev.values()))).sum(axis=1)
